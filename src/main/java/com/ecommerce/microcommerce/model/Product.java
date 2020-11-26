@@ -2,12 +2,29 @@ package com.ecommerce.microcommerce.model;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.validator.constraints.Length;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.Min;
+/*
 // === Filtrage dynamique ===
-@JsonFilter("monFiltreDynamique")
+// @JsonFilter("monFiltreDynamique")
+*/
+
+@Entity
 public class Product {
-    private int id;
+
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long id;
+
+    @Length(min=3, max=20)
     private String nom;
+
+    @Min(value=1)
     private int prix;
 
     private int prixAchat; // valeur a ne pas exposer
@@ -20,8 +37,9 @@ public class Product {
     }
 
     // constratcuteur pour les tests
-    public Product(int id, String nom, int prix, int prixAchat) {
-        this.id = id;
+    public Product(/*int id, */
+            String nom, int prix, int prixAchat) {
+        // this.id = id;
         this.nom = nom;
         this.prix = prix;
         this.prixAchat = prixAchat;
@@ -35,7 +53,7 @@ public class Product {
         this.prixAchat = prixAchat;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -47,7 +65,7 @@ public class Product {
         this.prix = prix;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
